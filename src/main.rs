@@ -1,39 +1,15 @@
-use powershell_script;
-
 use std::env;
 
 use serenity::{
     async_trait,
-    model::{channel::Message, gateway::Ready},
     prelude::*,
 };
 
+use crate::handler::Handler;
 
-struct Handler;
+pub mod handler;
+pub mod commands;
 
-#[async_trait]
-impl EventHandler for Handler {
-    async fn message(&self, ctx: Context, msg: Message) {
-        if msg.content.as_bytes()[0] != 33 { //checks if prefix is "!"
-            return;
-        }
-        
-        let command = &msg.content[1..];
-
-        match powershell_script::run(command) {
-            Ok(output) => {
-                msg.reply(&ctx,output).await;
-            }
-            Err(e) => {
-                msg.reply(&ctx,e).await;
-            }
-        }
-    }
-
-    async fn ready(&self, _: Context, ready: Ready) {
-        println!("{} is connected!", ready.user.name);
-    }
-}
 
 #[tokio::main]
 async fn main() {
