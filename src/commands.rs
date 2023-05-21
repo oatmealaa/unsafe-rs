@@ -11,8 +11,13 @@ pub mod curse;
 pub use curse::*;
 
 pub async fn command(ctx: Context,msg: Message) {
-    match msg.content.as_str() {
+    let split: Vec<&str> = msg.content.split(" ").collect();
+    
+
+
+    match split[0] {
         "!help" => help::help_msg(ctx,msg).await,
+        "!curse" => curse::curse(ctx,msg).await,
         _ => (),
     }
 }

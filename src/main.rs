@@ -9,7 +9,7 @@ use crate::handler::Handler;
 
 pub mod handler;
 pub mod commands;
-
+pub mod utils;
 
 #[tokio::main]
 async fn main() {
