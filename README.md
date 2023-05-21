@@ -1,2 +1,2 @@
 # unsafe-rs
-WIP
+Discord bot im making to help me learn rust
