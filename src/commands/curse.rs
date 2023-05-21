@@ -9,8 +9,12 @@ use rand::prelude::*;
 
 pub async fn curse(ctx: Context, msg: Message) {
     let split: Vec<&str> = msg.content.split(" ").collect();
-    let mut rng = rand::thread_rng();
-    let curse: i32 = rng.gen_range(0..=2);
+    let mut curse: i32 = 0;
+
+    {
+        let mut rng = rand::thread_rng();
+        curse = rng.gen_range(0..=2);
+    }
 
     let arg: Option<&str> = split.get(1).copied();
 
@@ -21,10 +25,13 @@ pub async fn curse(ctx: Context, msg: Message) {
 }
 
 async fn stinky_name(ctx: Context,msg: &Message, op_user: Option<&str>) {
-     let user = match op_user {
-         Some(u) => u.utils::parse_user(),
-         None => utils::random_user(msg.guild_id).await
-     };
+    let guild_id = msg.guild_id;
+    
+
+    let user = match op_user {
+         Some(u) => utils::parse_user(u, Some(&guild_id), &ctx).await,
+         None => utils::random_user(Some(&guild_id), &ctx).await
+    };
 
 }
 
