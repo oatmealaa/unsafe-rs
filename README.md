@@ -1,2 +1,2 @@
 # unsafe-rs
-custom discord bot
+WIP
