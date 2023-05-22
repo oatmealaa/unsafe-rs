@@ -10,6 +10,7 @@ use crate::handler::Handler;
 pub mod handler;
 pub mod commands;
 pub mod utils;
+pub mod db;
 
 #[tokio::main]
 async fn main() {
@@ -25,4 +26,5 @@ async fn main() {
     if let Err(why) = client.start().await {
         println!("Client error: {:?}", why);
     }
+
 }

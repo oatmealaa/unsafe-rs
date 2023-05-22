@@ -48,10 +48,12 @@ async fn stinky_name(ctx: Context,msg: &Message, op_user: Option<&str>) {
     let member = match guild.member(&ctx, &user).await {
         Ok(m) => m,
         Err(why) => {
-            panic!("{?:}", why);
+            panic!("{:?}", why);
             return;
         },
     };
+
+    msg.channel_id.say(&ctx, &format!("{} has been cursed with stinky name!", &member.user.name));
 
     let mut nick: String = member.user.name;
     nick.push_str(" (stinky)");
@@ -62,7 +64,6 @@ async fn stinky_name(ctx: Context,msg: &Message, op_user: Option<&str>) {
     
     guild.edit_member(&ctx, &user, |m| m.nickname(nick)).await.expect("err");
     
-    msg.channel_id.say(&ctx, &format!("{} has been cursed with stinky name!", member.user.name));
 }
 
 
