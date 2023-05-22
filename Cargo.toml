@@ -7,6 +7,6 @@
 
   [dependencies]
   tokio = { version = "1.28.1", features = ["macros","rt-multi-thread"] }
-  serenity = {features = ["client","gateway","model","rustls_backend"], version = "0.11.5"}
+  serenity = {default_features = false, features = ["client","gateway","model","rustls_backend","collector","utils","builder","cache","http",], version = "0.11.5"}
   rand = "0.8.5"
 
