@@ -1,4 +1,4 @@
-    [package]
+  [package]
   name = "unsafe-rs"
   version = "0.1.0"
   edition = "2021"
@@ -9,5 +9,5 @@
   tokio = { version = "1.28.1", features = ["macros","rt-multi-thread"] }
   serenity = {default_features = false, features = ["client","gateway","model","rustls_backend","collector","utils","builder","cache","http",], version = "0.11.5"}
   rand = "0.8.5"
-  sqlx = { version = "0.6.3", features = ["runtime-tokio-rustls", "sqlite", "offline"] }
-
+  rusqlite = "0.29.0"
+  chrono = "0.4.24"

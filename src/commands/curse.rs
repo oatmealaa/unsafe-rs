@@ -4,8 +4,10 @@ use serenity::{
     model::channel::Message,
     prelude::*,
 };
+use chrono::{DateTime, Utc};
 
 use rand::prelude::*;
+use crate::db::cursedb::insert_curse;
 
 pub async fn curse(ctx: Context, msg: Message) {
     let split: Vec<&str> = msg.content.split(" ").collect();
@@ -49,14 +51,17 @@ async fn stinky_name(ctx: Context,msg: &Message, op_user: Option<&str>) {
         Ok(m) => m,
         Err(why) => {
             panic!("{:?}", why);
-            return;
         },
     };
 
-    msg.channel_id.say(&ctx, &format!("{} has been cursed with stinky name!", &member.user.name));
+    msg.channel_id.say(&ctx, &format!("{} has been cursed with dumb name for 30 minutes!", &member.user.name));
+
+    let dt = Utc::now();
+
+    insert_curse(guild_id, user_id, dt.timestamp()+1800000).await.unwrap();
 
     let mut nick: String = member.user.name;
-    nick.push_str(" (stinky)");
+    nick.push_str(" (dumb)");
 
     if user.bot == true {
 
