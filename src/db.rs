@@ -13,7 +13,7 @@ pub async fn db_init() -> Result<(), String> {
     match conn.execute_batch(
         "
         BEGIN;
-        CREATE TABLE IF NOT EXISTS curses (guild_id TEXT NOT NULL, user_id TEXT NOT NULL, time_uncurse INTEGER NOT NULL, PRIMARY KEY (guild_id, user_id));
+        CREATE TABLE IF NOT EXISTS curses (id INTEGER PRIMARY KEY, guild_id TEXT NOT NULL, user_id TEXT NOT NULL, time_uncurse INTEGER NOT NULL);
 
         COMMIT;
         "

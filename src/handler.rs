@@ -4,6 +4,8 @@
      prelude::*,
  };
 use crate::commands;
+use crate::tick::ticker;
+
 
 pub struct Handler;
 
@@ -19,5 +21,6 @@ impl EventHandler for Handler {
 
     async fn ready(&self, ctx: Context, ready: Ready) {
         println!("{} is connected!", ready.user.name);
+        ticker(ct   x ,10).await;
     }
 }

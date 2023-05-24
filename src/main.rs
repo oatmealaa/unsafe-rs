@@ -5,13 +5,21 @@ use serenity::{
     prelude::*,
 };
 
+use tokio::{
+    select,
+    task::spawn,
+    time::{interval, sleep, Duration},
+};
+
 use crate::handler::Handler;
 use crate::db::db_init;
+use crate::tick::ticker;
 
 pub mod handler;
 pub mod commands;
 pub mod utils;
 pub mod db;
+pub mod tick;
 
 #[tokio::main]
 async fn main() {
@@ -22,6 +30,7 @@ async fn main() {
     if let Err(why) = db_init().await {
         panic!("{}",why);
     }
+    
 
     let mut client = Client::builder(&token, intents)
         .event_handler(Handler)
@@ -31,5 +40,4 @@ async fn main() {
     if let Err(why) = client.start().await {
         println!("Client error: {:?}", why);
     }
-
 }

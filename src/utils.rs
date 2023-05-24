@@ -49,7 +49,7 @@ pub async fn random_user(guildid: Option<&GuildId>, ctx: &Context) -> Option<Use
         },
     };
 
-    let guild = match gid.to_guild_cached(&ctx) {
+    let guild = match gid.to_guild_cached(&ctx)     {
         Some(x) => x,
         None => {
             println!("Failure getting guild");

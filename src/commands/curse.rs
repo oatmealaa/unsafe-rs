@@ -54,13 +54,18 @@ async fn stinky_name(ctx: Context,msg: &Message, op_user: Option<&str>) {
         },
     };
 
-    msg.channel_id.say(&ctx, &format!("{} has been cursed with dumb name for 30 minutes!", &member.user.name));
+    msg.channel_id.say(&ctx, &format!("{} has been cursed with dumb name for 30 minutes!", &member.user.name)).await;
+    
 
     let dt = Utc::now();
 
     insert_curse(guild_id, user_id, dt.timestamp()+1800000).await.unwrap();
 
-    let mut nick: String = member.user.name;
+    let mut nick: String = match member.nick {
+        Some(n) => n,
+        None => member.user.name,
+    };
+
     nick.push_str(" (dumb)");
 
     if user.bot == true {
