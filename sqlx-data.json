@@ -1,0 +1,63 @@
+{
+  "db": "SQLite",
+  "1f4b9d1f8dd04b60b8b82ad202610d4f96cd38dd73ed87a8fdabb0839345c6b0": {
+    "describe": {
+      "columns": [
+        {
+          "name": "guild_id",
+          "ordinal": 0,
+          "type_info": "Text"
+        },
+        {
+          "name": "user_id",
+          "ordinal": 1,
+          "type_info": "Text"
+        },
+        {
+          "name": "time_uncurse",
+          "ordinal": 2,
+          "type_info": "Int64"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false
+      ],
+      "parameters": {
+        "Right": 0
+      }
+    },
+    "query": "SELECT guild_id, user_id, time_uncurse FROM curses"
+  },
+  "b8a283a6f479f8f6e00495118ef7e8983736689384a95c11f734e12adf7880ea": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Right": 3
+      }
+    },
+    "query": "DELETE FROM curses WHERE guild_id=$1 AND user_id=$2 AND time_uncurse=$3"
+  },
+  "eb0169c57d1dbccb2a711acd0cfe28c658c4ffbf4589c2dbd3184f514dc7f654": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Right": 3
+      }
+    },
+    "query": "INSERT INTO curses (guild_id, user_id, time_uncurse) VALUES ($1, $2, $3)"
+  },
+  "f05d4749416368c1d1f56b94c3adfd4b140472db9b59cf1e2f2ec6ed891c1485": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Right": 0
+      }
+    },
+    "query": "CREATE TABLE IF NOT EXISTS curses ( guild_id TEXT NOT NULL, user_id TEXT NOT NULL, time_uncurse INTEGER NOT NULL);"
+  }
+}

@@ -9,6 +9,8 @@ use chrono::{DateTime, Utc};
 use rand::prelude::*;
 use crate::db::cursedb::insert_curse;
 
+const SECONDS_IN_HALF_HOUR: i64 = 1800;
+
 pub async fn curse(ctx: Context, msg: Message) {
     let split: Vec<&str> = msg.content.split(" ").collect();
     let mut curse: i32 = 0;
@@ -19,7 +21,6 @@ pub async fn curse(ctx: Context, msg: Message) {
     }
 
     let arg: Option<&str> = split.get(1).copied();
-    println!("{:?}", arg);
     match curse {
         0 => stinky_name(ctx, &msg, arg).await,
         _ => ()
@@ -59,7 +60,17 @@ async fn stinky_name(ctx: Context,msg: &Message, op_user: Option<&str>) {
 
     let dt = Utc::now();
 
-    insert_curse(guild_id, user_id, dt.timestamp()+1800000).await.unwrap();
+    
+    match &member.nick {
+        Some(n) => {
+            let split: Vec<&str> = n.split(" ").collect();
+            if split[split.len()-1] == "(dumb)" {
+                return;
+            }
+        }
+        None => ()
+    }
+    
 
     let mut nick: String = match member.nick {
         Some(n) => n,
@@ -73,7 +84,14 @@ async fn stinky_name(ctx: Context,msg: &Message, op_user: Option<&str>) {
     }
     
     guild.edit_member(&ctx, &user, |m| m.nickname(nick)).await.expect("err");
-    
+    insert_curse(guild_id, user_id, dt.timestamp()+SECONDS_IN_HALF_HOUR).await.unwrap();
 }
 
+async fn no_the() {
+
+}
+
+async fn no_emoji() {
+
+}
 

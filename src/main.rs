@@ -27,10 +27,8 @@ async fn main() {
         .expect("Expected a token in the environment");
     let intents = GatewayIntents::all();
 
-    if let Err(why) = db_init().await {
-        panic!("{}",why);
-    }
-    
+    db_init().await.unwrap(); 
+     
 
     let mut client = Client::builder(&token, intents)
         .event_handler(Handler)
@@ -40,4 +38,5 @@ async fn main() {
     if let Err(why) = client.start().await {
         println!("Client error: {:?}", why);
     }
+
 }

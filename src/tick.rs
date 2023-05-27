@@ -14,9 +14,6 @@ pub async fn ticker(ctx: Context ,secs: u64) {
 
     loop {
         interval.tick().await;
-
-        if let Err(why) = check_curses(&ctx).await {
-            panic!("{}",why);
-        } 
+        check_curses(ctx.clone()).await;
     }
 }

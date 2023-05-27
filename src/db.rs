@@ -1,24 +1,23 @@
-use rusqlite::{Connection, Result};
 use std::path::Path;
 use std::fs::File;
+use sqlx::{migrate::MigrateDatabase, Sqlite};
+use sqlx::*;
 
 pub mod cursedb;
 
-pub async fn db_init() -> Result<(), String> {
-    let conn = match Connection::open("sqlite.db") {
-        Ok(c) => c,
-        Err(e) => return Err(format!("Failed to open db: {:?}",e)),
-    };
+const DB_URL: &str = "sqlite://sqlite.db";
 
-    match conn.execute_batch(
-        "
-        BEGIN;
-        CREATE TABLE IF NOT EXISTS curses (id INTEGER PRIMARY KEY, guild_id TEXT NOT NULL, user_id TEXT NOT NULL, time_uncurse INTEGER NOT NULL);
-
-        COMMIT;
-        "
-    ) {
-        Ok(o) => Ok(()),
-        Err(e) => Err(format!("Failed to setup db: {:?}",e)),
+pub async fn db_init() -> Result<()> {
+    if !Sqlite::database_exists(DB_URL).await.unwrap_or(false) {
+        println!("Creating database {}", DB_URL);
+        Sqlite::create_database(DB_URL).await.unwrap();
     }
+    
+    let mut conn = SqliteConnection::connect(DB_URL).await?;
+
+    sqlx::query!("CREATE TABLE IF NOT EXISTS curses ( guild_id TEXT NOT NULL, user_id TEXT NOT NULL, time_uncurse INTEGER NOT NULL);")
+        .execute(&mut conn)
+        .await?;
+
+    Ok(()) 
 }

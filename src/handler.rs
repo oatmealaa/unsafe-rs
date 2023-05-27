@@ -6,6 +6,12 @@
 use crate::commands;
 use crate::tick::ticker;
 
+use tokio::{
+    select,
+    task::spawn,
+    time::{interval, sleep},
+};
+
 
 pub struct Handler;
 
@@ -21,6 +27,6 @@ impl EventHandler for Handler {
 
     async fn ready(&self, ctx: Context, ready: Ready) {
         println!("{} is connected!", ready.user.name);
-        ticker(ct   x ,10).await;
+            let tick_1s = spawn(ticker(ctx.clone(),60));
     }
 }
