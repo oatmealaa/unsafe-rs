@@ -1,12 +1,8 @@
 use std::time::Duration;
-use tokio::{
-    select,
-    task::spawn,
-    time::{interval, sleep},
-};
+use tokio::time::interval;
 use serenity::prelude::*;
 
-use crate::db::cursedb::check_curses;
+use crate::db::cursedb::check_dumbname;
 
 pub async fn ticker(ctx: Context ,secs: u64) {
     let mut interval = interval(Duration::from_secs(secs));
@@ -14,6 +10,6 @@ pub async fn ticker(ctx: Context ,secs: u64) {
 
     loop {
         interval.tick().await;
-        check_curses(ctx.clone()).await;
+        check_dumbname(ctx.clone()).await;
     }
 }

@@ -1,22 +1,27 @@
 use crate::utils;
 use serenity::{
-    async_trait,
     model::channel::Message,
     prelude::*,
 };
-use chrono::{DateTime, Utc};
+use chrono::Utc;
 
 use rand::prelude::*;
 use crate::db::cursedb::insert_curse;
 
 const SECONDS_IN_HALF_HOUR: i64 = 1800;
 
+pub enum CurseType {
+    Dumbname,
+    NoThe,
+    NoEmoji,
+}
+
 pub async fn curse(ctx: Context, msg: Message) {
     let split: Vec<&str> = msg.content.split(" ").collect();
     let mut curse: i32 = 0;
 
     {
-        let mut rng = rand::thread_rng();
+        let rng = rand::thread_rng();
         //curse = rng.gen_range(0..=2);
     }
 
@@ -88,7 +93,7 @@ async fn stinky_name(ctx: Context,msg: &Message, op_user: Option<&str>) {
 }
 
 async fn no_the() {
-
+        
 }
 
 async fn no_emoji() {

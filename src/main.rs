@@ -1,19 +1,11 @@
 use std::env;
 
 use serenity::{
-    async_trait,
     prelude::*,
-};
-
-use tokio::{
-    select,
-    task::spawn,
-    time::{interval, sleep, Duration},
 };
 
 use crate::handler::Handler;
 use crate::db::db_init;
-use crate::tick::ticker;
 
 pub mod handler;
 pub mod commands;

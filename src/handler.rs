@@ -6,12 +6,7 @@
 use crate::commands;
 use crate::tick::ticker;
 
-use tokio::{
-    select,
-    task::spawn,
-    time::{interval, sleep},
-};
-
+use tokio::task::spawn;
 
 pub struct Handler;
 

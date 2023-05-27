@@ -3,12 +3,10 @@ use serenity::model::prelude::*;
 use serenity::prelude::*;
 use sqlx::*;
 use sqlx::Connection;
-use std::collections::HashSet;
-use serenity::futures::TryStreamExt;
-
+use crate::commands::curse::CurseType;
 
 #[derive(Debug)]
-pub struct curse {
+pub struct Curse {
     guildid: String,
     userid: String,
     ts_uncurse: i64,
@@ -16,7 +14,7 @@ pub struct curse {
 
 const DB_URL: &str = "sqlite://sqlite.db"; 
 
-pub async fn insert_curse(guildid: GuildId, userid: UserId, ts_uncurse: i64) -> Result<()> {
+pub async fn insert_curse(guildid: GuildId, userid: UserId, ts_uncurse: i64, ) -> Result<()> {
     let mut conn = SqliteConnection::connect(DB_URL).await?;
 
     let (gid, uid) = (guildid.to_string(), userid.to_string());
@@ -28,15 +26,15 @@ pub async fn insert_curse(guildid: GuildId, userid: UserId, ts_uncurse: i64) -> 
 }
 
 
-pub async fn check_curses(ctx: Context) -> Result<()> {
+pub async fn check_dumbname(ctx: Context) -> Result<()> {
     let mut conn = SqliteConnection::connect(DB_URL).await?;
     let mut conn2 = SqliteConnection::connect(DB_URL).await?; // dont ask
-    let mut result = sqlx::query!("SELECT guild_id, user_id, time_uncurse FROM curses").fetch(&mut conn);
+    let mut result = sqlx::query!("SELECT guild_id, user_id, time_uncurse FROM curses WHERE curse_type=$1", "dumbname").fetch(&mut conn);
     
 
     let mut rows = vec![];
     while let Ok(Some(row)) = result.try_next().await {
-        rows.push(curse {
+        rows.push(Curse {
             guildid: row.guild_id,
             userid: row.user_id,
             ts_uncurse: row.time_uncurse,
