@@ -13,7 +13,7 @@ pub async fn db_init() -> Result<()> {
     
     let mut conn = SqliteConnection::connect(DB_URL).await?;
 
-    sqlx::query!("CREATE TABLE IF NOT EXISTS curses ( guild_id TEXT NOT NULL, user_id TEXT NOT NULL, time_uncurse INTEGER NOT NULL, curse_type TEXT NOT NULL);")
+    sqlx::query!("CREATE TABLE IF NOT EXISTS curses ( guild_id TEXT NOT NULL, user_id TEXT NOT NULL, time_uncurse INTEGER NOT NULL, curse_type INTEGER NOT NULL);")
         .execute(&mut conn)
         .await?;
 

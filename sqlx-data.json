@@ -1,6 +1,6 @@
 {
   "db": "SQLite",
-  "1f4b9d1f8dd04b60b8b82ad202610d4f96cd38dd73ed87a8fdabb0839345c6b0": {
+  "110b01ba45d0047da9aa4df9f18a443139f1af0107ba3733cdcefd8d29ef1719": {
     "describe": {
       "columns": [
         {
@@ -17,9 +17,15 @@
           "name": "time_uncurse",
           "ordinal": 2,
           "type_info": "Int64"
+        },
+        {
+          "name": "curse_type",
+          "ordinal": 3,
+          "type_info": "Int64"
         }
       ],
       "nullable": [
+        false,
         false,
         false,
         false
@@ -28,29 +34,9 @@
         "Right": 0
       }
     },
-    "query": "SELECT guild_id, user_id, time_uncurse FROM curses"
+    "query": "SELECT guild_id, user_id, time_uncurse, curse_type FROM curses"
   },
-  "b8a283a6f479f8f6e00495118ef7e8983736689384a95c11f734e12adf7880ea": {
-    "describe": {
-      "columns": [],
-      "nullable": [],
-      "parameters": {
-        "Right": 3
-      }
-    },
-    "query": "DELETE FROM curses WHERE guild_id=$1 AND user_id=$2 AND time_uncurse=$3"
-  },
-  "eb0169c57d1dbccb2a711acd0cfe28c658c4ffbf4589c2dbd3184f514dc7f654": {
-    "describe": {
-      "columns": [],
-      "nullable": [],
-      "parameters": {
-        "Right": 3
-      }
-    },
-    "query": "INSERT INTO curses (guild_id, user_id, time_uncurse) VALUES ($1, $2, $3)"
-  },
-  "f05d4749416368c1d1f56b94c3adfd4b140472db9b59cf1e2f2ec6ed891c1485": {
+  "64b22e8d76aaa130f166c854bd429cf3eb18235fe3dd28e8d53815b2b9ce8c0b": {
     "describe": {
       "columns": [],
       "nullable": [],
@@ -58,6 +44,44 @@
         "Right": 0
       }
     },
-    "query": "CREATE TABLE IF NOT EXISTS curses ( guild_id TEXT NOT NULL, user_id TEXT NOT NULL, time_uncurse INTEGER NOT NULL);"
+    "query": "CREATE TABLE IF NOT EXISTS curses ( guild_id TEXT NOT NULL, user_id TEXT NOT NULL, time_uncurse INTEGER NOT NULL, curse_type INTEGER NOT NULL);"
+  },
+  "6f1f516e1b38bb27f130e78c20f8a7de48216f658aebf984e5929870eebbc0df": {
+    "describe": {
+      "columns": [
+        {
+          "name": "curse_type",
+          "ordinal": 0,
+          "type_info": "Int64"
+        }
+      ],
+      "nullable": [
+        false
+      ],
+      "parameters": {
+        "Right": 2
+      }
+    },
+    "query": "SELECT curse_type FROM curses WHERE guild_id=$1 AND user_id=$2 AND curse_type=1"
+  },
+  "a996d58baa2a029f07b4d71b7d94500eadd16a4eac1c5924ce022c8d4bae6bee": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Right": 4
+      }
+    },
+    "query": "INSERT INTO curses (guild_id, user_id, time_uncurse, curse_type) VALUES ($1, $2, $3, $4)"
+  },
+  "f9637fe3ba87327edc7442e14185a2c10705c8a7e4050135123a11fa9ffdffa7": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Right": 4
+      }
+    },
+    "query": "DELETE FROM curses WHERE guild_id=$1 AND user_id=$2 AND time_uncurse=$3 AND curse_type=$4"
   }
 }
